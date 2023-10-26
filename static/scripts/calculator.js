@@ -544,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
   },
   {
     name: "2D Rocket League",
-    link: "https://v6p9d9t4.ssl.hwcdn.net/html/3325334/index.html",
+    link: "https://gg-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/bessiegasbarro/Rocked@8116f71014171d1a425021ec43d64949fd04a5bb/rl.xml",
     image: "/images/icons/2D-Rocket-League.webp",
     categories: ['all'],
     error: false
