@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
      {
       name: "Gmovies",
       link: "https://gmovies.cc/",
-      image: "https://movie-web.app/apple-touch-icon.png",
+      image: "512x512bb.jpg",
       categories: ["all", "media", "stream"],
       error: false
     },
