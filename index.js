@@ -8,7 +8,7 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
 const bareServer = createBareServer('/outerspace/');
-const PORT = 8080;
+const PORT = 80;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
