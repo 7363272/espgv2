@@ -92,7 +92,7 @@
         function fetchJSON() {
             var search = document.getElementById('searchInput').value;
             var url = `https://ezani-dev-spne.1.us-1.fl0.io/search?keyw=${search}`;
-            var baseUrl = 'ezani/math/index.html';
+            var baseUrl = '/ezani/math/index.html';
 
             fetch(url)
                 .then(response => response.json())
