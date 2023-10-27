@@ -14,9 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
       categories: ["all", "media"],
       error: false
     },
-    {
+     {
       name: "Movie Web",
       link: "https://movie-web.app",
+      image: "https://movie-web.app/apple-touch-icon.png",
+      categories: ["all", "media", "stream"],
+      error: false
+    },
+     {
+      name: "Gmovies",
+      link: "https://gmovies.cc/",
       image: "https://movie-web.app/apple-touch-icon.png",
       categories: ["all", "media", "stream"],
       error: false
