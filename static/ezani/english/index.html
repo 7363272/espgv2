@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EZAni</title>
+    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c00, #8B0000);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .dropdown {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #333;
+            border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .dropdown:after {
+            content: "\25BC";
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+
+        .dropdown select:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .video-container {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .video-iframe {
+            text-align: center;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .video-player {
+            margin: 0 auto;
+        }
+
+        .vjs-custom-skin.vjs-video {
+            background-color: #000;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .vjs-custom-skin .vjs-control-bar {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .vjs-custom-skin .vjs-slider {
+            background: #0073e6;
+        }
+
+        .vjs-custom-skin .vjs-slider-handle {
+            background: #fff;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        /* Next Episode Button */
+        .next-episode-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: #0073e6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="pageTitle">Loading...</h1>
+        <div class="dropdown">
+            <select id="dropdownSelect" onchange="showVideo()">
+                <option value="">Select a video quality</option>
+            </select>
+        </div>
+
+        <div class="video-container">
+            <div class="video-iframe" id="videoIframe">
+                <video id="videoPlayer" class="video-js vjs-default-skin video-player vjs-custom-skin" data-setup='{}' controls preload="auto" width="760" height="480"></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next Episode Button -->
+    <button class="next-episode-button" onclick="nextEpisode()">Next Episode</button>
+
+    <script src="https://vjs.zencdn.net/7.17.0/video.js"></script>
+    <script>
+        function showVideo() {
+            const videoIframe = document.getElementById('videoIframe');
+            const dropdownSelect = document.getElementById("dropdownSelect");
+            const selectedOption = dropdownSelect.options[dropdownSelect.selectedIndex];
+            const videoPlayer = videojs('videoPlayer');
+
+            if (selectedOption.value) {
+                videoPlayer.src({
+                    src: selectedOption.value,
+                    type: 'application/x-mpegURL',
+                });
+                videoPlayer.play(); // Auto-play the video
+            } else {
+                videoPlayer.pause();
+                videoPlayer.exitFullscreen();
+            }
+        }
+
+        function nextEpisode() {
+            // Get the current episode parameter from the URL
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            let episode = urlParams.get("episode");
+
+            // Extract the episode number (assuming it's at the end of the string)
+            const episodeNumber = episode.match(/\d+$/);
+
+            if (episodeNumber) {
+                // Increment the episode number
+                episodeNumber[0] = String(Number(episodeNumber[0]) + 1);
+
+                // Replace the old episode number with the new one
+                episode = episode.replace(/\d+$/, episodeNumber[0]);
+
+                // Update the URL and refresh the page
+                window.location.href = `index.html?episode=${episode}`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const episode = urlParams.get("episode");
+
+            if (episode) {
+                const apiUrl = `https://api-consumet-org-gray.vercel.app/math/mathematics/watch/${episode}`;
+
+                fetch(apiUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const dropdownSelect = document.getElementById("dropdownSelect");
+                        const pageTitle = document.getElementById("pageTitle");
+
+                        pageTitle.textContent = episode.replace(/-/g, ' ');
+
+                        if (data.sources && data.sources.length > 0) {
+                            data.sources.forEach(function (source) {
+                                const option = document.createElement("option");
+                                option.value = source.url;
+                                option.text = source.quality;
+                                dropdownSelect.appendChild(option);
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching data:", error);
+                    });
+            }
+        });
+    </script>
+</body>
+</html>

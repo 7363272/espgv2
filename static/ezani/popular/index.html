@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popular Anime List</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c00, #8B0000);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            font-size: 36px;
+            text-transform: uppercase;
+        }
+
+        .anime-card {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .anime-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+
+        .anime-info {
+            font-size: 18px;
+        }
+
+        .dub-link {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        a {
+            color: #ff8c00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Popular Anime List</h1>
+
+    <div id="anime-list"></div>
+
+    <script>
+        const apiUrl = "https://api-consumet-org-gray.vercel.app/meta/anilist/popular";
+
+        // Function to make a GET request to the API URL
+        function fetchData() {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the relevant data
+                    const results = data.results;
+                    const animeList = document.getElementById('anime-list');
+
+                    for (let i = 0; i < results.length; i++) {
+                        const anime = results[i];
+                        let romajiTitle = anime.title.romaji;
+                        const englishTitle = anime.title.english;
+                        const totalEpisodes = anime.totalEpisodes;
+
+                        // Convert spaces to hyphens for the romaji title
+                        romajiTitle = romajiTitle.replace(/ /g, "-").toLowerCase();
+
+                        // Create a link with the lowercase hyphenated romaji title in the URL
+                        const link = `/ezani/math/index.html?id=${romajiTitle}`;
+
+                        // Create an anime card
+                        const animeCard = document.createElement('div');
+                        animeCard.classList.add('anime-card');
+
+                        // Populate the anime card
+                        animeCard.innerHTML = `
+                                <div class="anime-title"><a href="${link}">${englishTitle} Sub</a></div>
+                                <div class="anime-title"><a href="${link}-dub">${englishTitle} Dub</a></div>
+                                <div class="anime-info">
+                                    <p>Title: ${romajiTitle.replace(/-/g, ' ')}</p>
+                                    <p>Total Episodes: ${totalEpisodes}</p>
+                                </div>
+                            `;
+
+                        // Append the anime card to the anime list
+                        animeList.appendChild(animeCard);
+                    }
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the fetch
+                    console.error("Error:", error);
+                });
+        }
+
+        // Execute the fetchData function when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>

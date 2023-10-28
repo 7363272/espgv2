@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Page</title>
+    <style>
+        /* Add CSS for the background and overall design */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c00, #8B0000);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* Add CSS for the search bar */
+        .search-bar {
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for container */
+            margin: 20px;
+            text-align: center;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Add CSS for the JSON response section */
+        .json-response {
+            margin: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for container */
+        }
+
+        .episode-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .episode-button {
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background for episode buttons */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%; /* Set button width to 100% of its container */
+            text-align: center; /* Center-align button content */
+        }
+    </style>
+</head>
+<body>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for episode numbers">
+    </div>
+    <div class="json-response" id="response">
+        <!-- JSON response will be displayed here -->
+    </div>
+
+    <script>
+        // Function to fetch JSON data
+        function fetchJSON() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var search = urlParams.get('id');
+            var responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Fetching data...';
+
+            // Replace 'https://gogoanime-api-1.hop.sh/anime-details/{id}' with the actual URL
+            var url = 'https://ezani-dev-spne.1.us-1.fl0.io/details/' + search;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the "episodeNum" values from the "episodesList" array as buttons
+                    responseDiv.innerHTML = ''; // Clear previous results
+
+                    if (data.episodesList && data.episodesList.length > 0) {
+                        var episodeList = document.createElement('ul');
+                        episodeList.className = 'episode-list';
+                        data.episodesList.forEach(function(episode) {
+                            var episodeNum = episode['episodeNum'];
+                            var episodeId = episode['episodeId'];
+                            var episodeListItem = document.createElement('li');
+                            var episodeButton = document.createElement('button');
+                            episodeButton.className = 'episode-button';
+                            episodeButton.textContent = 'Episode ' + episodeNum; // Add "Episode" text
+                            episodeButton.addEventListener('click', function() {
+                                window.location.href = '/ezani/english/index.html?episode=' + episodeId;
+                            });
+                            episodeListItem.appendChild(episodeButton);
+                            episodeList.appendChild(episodeListItem);
+                        });
+                        responseDiv.appendChild(episodeList);
+                    } else {
+                        responseDiv.innerHTML = 'No episodes found.';
+                    }
+                })
+                .catch(error => {
+                    responseDiv.innerHTML = 'Error fetching JSON: ' + error;
+                });
+        }
+
+        // Fetch JSON data as soon as the page loads
+        window.onload = fetchJSON;
+
+        // Add an input event listener to the search bar
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var searchTerm = this.value.trim().toLowerCase();
+            var episodeButtons = document.querySelectorAll('.episode-button');
+
+            episodeButtons.forEach(function(button) {
+                var episodeText = button.textContent.trim().toLowerCase();
+                if (episodeText === 'episode ' + searchTerm) { // Check for exact match
+                    button.style.display = 'block';
+                } else {
+                    button.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
