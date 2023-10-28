@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popular Anime</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c00, #8B0000);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .anime-card {
+            background-color: #1a1a1a;
+            border: 2px solid #fff;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .anime-title,
+        .anime-dub-link {
+            font-size: 20px; /* Set the font size to 20px for both anime titles and "Dub" links */
+            color: #ff8c00;
+            text-decoration: none;
+        }
+
+        .anime-dub-card {
+            background-color: #1a1a1a;
+            border: 2px solid #fff;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Popular Anime</h1>
+    <div id="anime-list"></div>
+
+    <script>
+        // Function to make a GET request
+        function fetchPopularAnime() {
+            fetch("https://ezani-dev-spne.1.us-1.fl0.io/popular")
+                .then(response => response.json())
+                .then(data => {
+                    // Extract and display anime titles with links
+                    const animeList = document.getElementById("anime-list");
+                    data.forEach(anime => {
+                        const title = anime.animeTitle;
+                        const animeID = anime.animeId;
+                        const animeIDDub = `${animeID}-dub`;
+
+                        // Create a card for each title
+                        const cardElement = document.createElement("div");
+                        cardElement.classList.add("anime-card");
+
+                        // Create a link for the title within the card
+                        const titleLinkElement = document.createElement("a");
+                        titleLinkElement.classList.add("anime-title");
+                        titleLinkElement.textContent = title;
+                        titleLinkElement.href = `/ezani/math/index.html?id=${animeID}`;
+
+                        // Append the title link to the card
+                        cardElement.appendChild(titleLinkElement);
+
+                        // Append the card to the "anime-list" <div>
+                        animeList.appendChild(cardElement);
+
+                        // Create a card for the "Dub" link
+                        const dubCardElement = document.createElement("div");
+                        dubCardElement.classList.add("anime-dub-card");
+
+                        // Create a link for the "Dub" text within the "Dub" card
+                        const dubLinkElement = document.createElement("a");
+                        dubLinkElement.classList.add("anime-dub-link");
+                        dubLinkElement.textContent = `${title} Dub`;
+                        dubLinkElement.href = `/ezani/math/index.html?id=${animeIDDub}`;
+
+                        // Append the "Dub" link to the "Dub" card
+                        dubCardElement.appendChild(dubLinkElement);
+
+                        // Append the "Dub" card to the "anime-list" <div>
+                        animeList.appendChild(dubCardElement);
+                    });
+                })
+                .catch(error => {
+                    console.error("An error occurred:", error);
+                });
+        }
+
+        // Call the function to fetch and display popular anime
+        fetchPopularAnime();
+    </script>
+</body>
+</html>
