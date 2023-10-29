@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       error: false
     },
     {
+      name: "SORA",
+      link: "https://sorachill.vercel.app/",
+      image: "512x512bb.jpg",
+      categories: ["all", "media", "stream"],
+      error: false
+    },
+    {
       name: "Scratch",
       link: "https://scratch.mit.edu",
       image: "/images/icons/scratch.jpg",
@@ -81,13 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
       name: "Firefox Web Browser",
       link: "https://replit.com/@cooleddie001/Firefox-Legacy?v=1",
       image: "/images/icons/apps/firefox.png",
-      categories: ["all", "media"],
-      error: false
-    },
-    {
-      name: "Flix HQ",
-      link: "https://flixhq.to",
-      image: "/images/icons/apps/flixhq.png",
       categories: ["all", "media"],
       error: false
     },
@@ -252,13 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
       image: "/images/icons/discord.jpg",
       categories: ["all", "social"],
       blank: "true",
-      error: false
-    },
-    {
-      name: "HD Today",
-      link: "https://hdtoday.tv",
-      image: "/images/icons/hd.png",
-      categories: ["all", "media", "stream"],
       error: false
     },
   ];
