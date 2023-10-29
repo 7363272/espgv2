@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: "SORA",
       link: "https://sorachill.vercel.app/",
-      image: "512x512bb.jpg",
+      image: "IMG_0057.png",
       categories: ["all", "media", "stream"],
       error: false
     },
