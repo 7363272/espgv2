@@ -1,6 +1,6 @@
 body {
     /* https://www.color-hex.com/color/d3d3d3 */
-    background-color: #000000; /*#f6f6f6, EBEBD3, fafafa*/
+    background: linear-gradient(to bottom, #ff8c00, #8B0000); /*#f6f6f6, EBEBD3, fafafa*/
     font-family: Bungee Outline;
     font-weight: 900;
     overflow: hidden;
