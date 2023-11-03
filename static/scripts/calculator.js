@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     {
       name: "Roblox (TRY MULTIPLE TIMES)",
-      link: "https://nowgg.nl/play/roblox-corporation/5349/roblox",
+      link: "https://now.gg/apps/roblox-corporation/5349/roblox.html",
       image: "/images/icons/IMG_0113.png",
       categories: ['all', '2P'],
       error: false
