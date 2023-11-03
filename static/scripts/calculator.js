@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const appsList = [
     {
       name: "! Request A Game [In Progress]",
-      link: "",
+      link: "https://bing.com/",
       image: "/images/icons/request.webp",
       categories: ['all'],
       error: false
