@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
      {
       name: "NowGG (Official Beta)",
-      link: "https://nowgg.nl/",
+      link: "https://now.gg/games/action.html",
       image: "/images/icons/IMG_0052.png",
       categories: ['all', '2P'],
       error: false
