@@ -51,14 +51,14 @@
     <script>
         // Function to make a GET request
         function fetchPopularAnime() {
-            fetch("https://ezani-dev-spne.1.us-1.fl0.io/popular")
+            fetch("https://api-consumet-org-gray.vercel.app/math/mathematics/top-airing")
                 .then(response => response.json())
                 .then(data => {
                     // Extract and display anime titles with links
                     const animeList = document.getElementById("anime-list");
-                    data.forEach(anime => {
-                        const title = anime.animeTitle;
-                        const animeID = anime.animeId;
+                    data.results.forEach(anime => { // Change 'data' to 'data.results'
+                        const title = anime.title;
+                        const animeID = anime.id;
                         const animeIDDub = `${animeID}-dub`;
 
                         // Create a card for each title
