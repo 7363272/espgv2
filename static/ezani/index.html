@@ -3,26 +3,25 @@
 <head>
     <title>EZAni</title>
     <style>
-
         body {
-          margin: 0;
-          padding: 0;
-          font-family: Arial, sans-serif;
-          background: linear-gradient(to bottom, #ff8c00, #8B0000);
-          background-size: cover;
-          background-attachment: fixed;
-          color: #fff;
-          text-align: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c00, #8B0000);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
         }
 
         h1 {
-          background: #ff7f00;
-          padding: 10px;
-          border-radius: 5px;
+            background: #ff7f00;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         p {
-          margin: 10px 0;
+            margin: 10px 0;
         }
 
         input[type="text"] {
@@ -31,56 +30,57 @@
             padding: 5px;
             border: 1px solid #8B0000;
             border-radius: 5px;
-            font-size: large
+            font-size: large;
         }
 
         button {
-          background: #8B0000;
-          color: #fff;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
+            background: #8B0000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         #result {
-          margin: 20px;
-          padding: 20px;
-          background: rgba(139, 0, 0, 0.8);
-          border: 1px solid #8B0000;
-          border-radius: 10px;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(139, 0, 0, 0.8);
+            border: 1px solid #8B0000;
+            border-radius: 10px;
         }
 
         .box {
-          background: #be0000;
-          color: #fff;
-          padding: 10px;
-          margin: 10px 0;
-          border-radius: 5px;
+            background: #be0000;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
         }
 
         .img-box {
-          background: #8b0000;
-          color: #fff;
-          padding: 10px;
-          margin: 10px 0;
-          border-radius: 5px;
+            background: #8b0000;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
         }
 
         .button-container {
-          text-align: center;
+            text-align: center;
         }
 
         .go-button {
-          background: #be0000;
-          color: #fff;
-          padding: 5px 10px;
-          border: none;
-          border-radius: 5px;
-          text-decoration: none;
-          display: block;
-          margin-top: 5px;
+            background: #be0000;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
         }
+
         .normal-button {
             background: #be0000;
             color: #fff;
@@ -88,11 +88,12 @@
             border: none;
             border-radius: 5px;
             text-decoration: none;
-            display: inline-block; /* Set to inline-block to adjust width */
+            display: inline-block;
             margin-top: 5px;
             text-align: center;
-            font-size: x-large
+            font-size: x-large;
         }
+
         .button {
             background: #be0000;
             color: #fff;
@@ -100,10 +101,10 @@
             border: none;
             border-radius: 5px;
             text-decoration: none;
-            display: inline-block; /* Set to inline-block to adjust width */
+            display: inline-block;
             margin-top: 5px;
             text-align: center;
-            font-size: large
+            font-size: large;
         }
     </style>
 </head>
@@ -124,7 +125,7 @@
     <script>
         function fetchJSON() {
             var search = document.getElementById('searchInput').value;
-            var url = `https://ezani-dev-spne.1.us-1.fl0.io/search?keyw=${search}`;
+            var url = `https://api-consumet-org-gray.vercel.app/math/mathematics/${search}`;
             var baseUrl = 'math/index.html';
 
             fetch(url)
@@ -133,46 +134,48 @@
                     var resultDiv = document.getElementById('result');
                     resultDiv.innerHTML = '';
 
-                    data.forEach(function (obj) {
-                        for (var key in obj) {
-                            if (key !== 'animeUrl' && key !== 'animeId' && key !== 'status') {
-                                if (key === 'animeTitle') {
-                                    var titleElement = document.createElement('div');
-                                    titleElement.textContent = obj[key];
-                                    titleElement.className = 'box';
-                                    
-                                } else if (key === 'animeImg') {
-                                    var imgContainer = document.createElement('div');
-                                    imgContainer.style.display = 'block';
-                                    imgContainer.className = 'img-box';
-                                    //
-                                    //                                    var imgElement = document.createElement('img');
-                                    //                                    imgElement.src = obj[key];
-                                    //                                    imgContainer.appendChild(imgElement);
+                    if (Array.isArray(data.results)) {
+                        data.results.forEach(function (obj) {
+                            var groupContainer = document.createElement('div');
+                            groupContainer.className = 'box';
 
-                                    var buttonContainer = document.createElement('div');
-                                    buttonContainer.className = 'button-container';
+                            var titleElement = document.createElement('div');
+                            titleElement.textContent = "Title: " + obj.title;
 
-                                    var button = document.createElement('a');
-                                    button.textContent = obj['animeTitle'];
-                                    button.href = `${baseUrl}?id=${obj['animeId']}`;
-                                    button.className = 'go-button';
+                            var releaseDateElement = document.createElement('div');
+                            releaseDateElement.textContent = obj.releaseDate;
 
-                                    buttonContainer.appendChild(button);
-                                    imgContainer.appendChild(buttonContainer);
+                            var subOrDubElement = document.createElement('div');
+                            subOrDubElement.textContent = "Sub/Dub: " + obj.subOrDub;
 
-                                    resultDiv.appendChild(imgContainer);
-                                } else {
-                                    var keyValueElement = document.createElement('div');
-                                    keyValueElement.textContent = key + ": " + obj[key];
-                                    keyValueElement.className = 'box';
-                                    resultDiv.appendChild(keyValueElement);
-                                }
-                            }
-                        }
-                        var breakElement = document.createElement('br');
-                        resultDiv.appendChild(breakElement);
-                    });
+                            var imgContainer = document.createElement('div');
+                            imgContainer.style.display = 'block';
+                            imgContainer.className = 'img-box';
+
+                            var buttonContainer = document.createElement('div');
+                            buttonContainer.className = 'button-container';
+
+                            var button = document.createElement('a');
+                            button.textContent = "View Details";
+                            button.href = `${baseUrl}?id=${obj.id}`;
+                            button.className = 'go-button';
+
+                            buttonContainer.appendChild(button);
+                            imgContainer.appendChild(buttonContainer);
+
+                            groupContainer.appendChild(titleElement);
+                            groupContainer.appendChild(releaseDateElement);
+                            groupContainer.appendChild(subOrDubElement);
+                            groupContainer.appendChild(imgContainer);
+
+                            resultDiv.appendChild(groupContainer);
+
+                            var breakElement = document.createElement('br');
+                            resultDiv.appendChild(breakElement);
+                        });
+                    } else {
+                        resultDiv.textContent = "No data found.";
+                    }
                 })
                 .catch(error => {
                     console.error("Error fetching JSON:", error);
