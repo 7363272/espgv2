@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Popular Anime</title>
+    <title>EZAni</title>
     <style>
         body {
             margin: 0;
@@ -11,96 +11,176 @@
             background-size: cover;
             background-attachment: fixed;
             color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            text-align: center;
         }
 
-        .anime-card {
-            background-color: #1a1a1a;
-            border: 2px solid #fff;
+        h1 {
+            background: #ff7f00;
             padding: 10px;
-            margin: 10px;
-            text-align: center;
+            border-radius: 5px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        input[type="text"] {
+            background: #ff7f00;
+            color: #fff;
+            padding: 5px;
+            border: 1px solid #8B0000;
+            border-radius: 5px;
+            font-size: large;
+        }
+
+        button {
+            background: #8B0000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(139, 0, 0, 0.8);
+            border: 1px solid #8B0000;
             border-radius: 10px;
         }
 
-        .anime-title,
-        .anime-dub-link {
-            font-size: 20px; /* Set the font size to 20px for both anime titles and "Dub" links */
-            color: #ff8c00;
+        .box {
+            background: #be0000;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .img-box {
+            background: #8b0000;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .go-button {
+            background: #be0000;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
             text-decoration: none;
+            display: block;
+            margin-top: 5px;
         }
 
-        .anime-dub-card {
-            background-color: #1a1a1a;
-            border: 2px solid #fff;
-            padding: 10px;
-            margin: 10px;
+        .normal-button {
+            background: #be0000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 5px;
             text-align: center;
-            border-radius: 10px;
+            font-size: x-large;
+        }
+
+        .button {
+            background: #be0000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 5px;
+            text-align: center;
+            font-size: large;
         }
     </style>
 </head>
 <body>
-    <h1>Popular Anime</h1>
-    <div id="anime-list"></div>
+    <h1>
+        EZAni<br>
+        Made By Aiden
+    </h1>
+    <p>
+        <a class="normal-button" href="popular/index.html">Popular Anime</a>
+        <br>
+        <p class="linkp"><a href="../index.html">HomePage</a> • <a href="https://discord.gg/R8DdqMvbSg" target="_blank">discord</a></p>
+    </p>
+    <p style="font-size: larger">Search for the Anime: <input type="text" id="searchInput"></p>
+    <button class="button" onclick="fetchJSON()">Search</button>
+    <div id="result"></div>
 
     <script>
-        // Function to make a GET request
-        function fetchPopularAnime() {
-            fetch("https://ezani-dev-spne.1.us-1.fl0.io/popular")
+        function fetchJSON() {
+            var search = document.getElementById('searchInput').value;
+            var url = `https://api-consumet-org-gray.vercel.app/math/mathematics/${search}`;
+            var baseUrl = 'math/index.html';
+
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    // Extract and display anime titles with links
-                    const animeList = document.getElementById("anime-list");
-                    data.forEach(anime => {
-                        const title = anime.animeTitle;
-                        const animeID = anime.animeId;
-                        const animeIDDub = `${animeID}-dub`;
+                    var resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = '';
 
-                        // Create a card for each title
-                        const cardElement = document.createElement("div");
-                        cardElement.classList.add("anime-card");
+                    if (Array.isArray(data.results)) {
+                        data.results.forEach(function (obj) {
+                            var groupContainer = document.createElement('div');
+                            groupContainer.className = 'box';
 
-                        // Create a link for the title within the card
-                        const titleLinkElement = document.createElement("a");
-                        titleLinkElement.classList.add("anime-title");
-                        titleLinkElement.textContent = title;
-                        titleLinkElement.href = `/ezani/math/index.html?id=${animeID}`;
+                            var titleElement = document.createElement('div');
+                            titleElement.textContent = "Title: " + obj.title;
 
-                        // Append the title link to the card
-                        cardElement.appendChild(titleLinkElement);
+                            var releaseDateElement = document.createElement('div');
+                            releaseDateElement.textContent = obj.releaseDate;
 
-                        // Append the card to the "anime-list" <div>
-                        animeList.appendChild(cardElement);
+                            var subOrDubElement = document.createElement('div');
+                            subOrDubElement.textContent = "Sub/Dub: " + obj.subOrDub;
 
-                        // Create a card for the "Dub" link
-                        const dubCardElement = document.createElement("div");
-                        dubCardElement.classList.add("anime-dub-card");
+                            var imgContainer = document.createElement('div');
+                            imgContainer.style.display = 'block';
+                            imgContainer.className = 'img-box';
 
-                        // Create a link for the "Dub" text within the "Dub" card
-                        const dubLinkElement = document.createElement("a");
-                        dubLinkElement.classList.add("anime-dub-link");
-                        dubLinkElement.textContent = `${title} Dub`;
-                        dubLinkElement.href = `/ezani/math/index.html?id=${animeIDDub}`;
+                            var buttonContainer = document.createElement('div');
+                            buttonContainer.className = 'button-container';
 
-                        // Append the "Dub" link to the "Dub" card
-                        dubCardElement.appendChild(dubLinkElement);
+                            var button = document.createElement('a');
+                            button.textContent = "View Details";
+                            button.href = `${baseUrl}?id=${obj.id}`;
+                            button.className = 'go-button';
 
-                        // Append the "Dub" card to the "anime-list" <div>
-                        animeList.appendChild(dubCardElement);
-                    });
+                            buttonContainer.appendChild(button);
+                            imgContainer.appendChild(buttonContainer);
+
+                            groupContainer.appendChild(titleElement);
+                            groupContainer.appendChild(releaseDateElement);
+                            groupContainer.appendChild(subOrDubElement);
+                            groupContainer.appendChild(imgContainer);
+
+                            resultDiv.appendChild(groupContainer);
+
+                            var breakElement = document.createElement('br');
+                            resultDiv.appendChild(breakElement);
+                        });
+                    } else {
+                        resultDiv.textContent = "No data found.";
+                    }
                 })
                 .catch(error => {
-                    console.error("An error occurred:", error);
+                    console.error("Error fetching JSON:", error);
                 });
         }
-
-        // Call the function to fetch and display popular anime
-        fetchPopularAnime();
     </script>
 </body>
 </html>
