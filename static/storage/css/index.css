@@ -16,6 +16,9 @@ body {
     cursor: none;
     scrollbar-width: none; 
     -ms-overflow-style: none;
+  border: 10px solid white;
+  margin: 0;
+  padding: 0;
 }
 
 body::-webkit-scrollbar {
