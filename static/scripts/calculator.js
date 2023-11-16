@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     {
       name: "Roblox (TRY MULTIPLE TIMES)",
-      link: "https://now.gg/apps/roblox-corporation/5349/roblox.html",
+      link: "https://now.gg/play/roblox-corporation/5349/roblox.html",
       image: "/images/icons/IMG_0113.png",
       categories: ['all', '2P'],
       error: false
@@ -40,14 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     {
       name: "Cod Mobile (Official Beta)",
-      link: "https://nowgg.nl/apps/activision-publishing-inc/7935/call-of-duty.html",
+      link: "https://now.gg/play/activision-publishing-inc/7935/call-of-duty.html",
       image: "/images/icons/IMG_0052.png",
       categories: ['all', '2P'],
       error: false
     },
     {
       name: "PUBG Mobile (Official)",
-      link: "https://nowgg.nl/play/proxima-beta/2609/pubg-mobile-resistance",
+      link: "https://now.gg/play/proxima-beta/2609/pubg-mobile-resistance.html",
       image: "/images/icons/IMG_0052.png",
       categories: ['all', '2P'],
       error: false
